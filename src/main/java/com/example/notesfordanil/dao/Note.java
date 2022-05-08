@@ -1,9 +1,9 @@
 package com.example.notesfordanil.dao;
 
 public class Note {
-    private int id ;
-    private String notetopic ;
-    private String Content ;
+    private int id;
+    private String notetopic;
+    private String Content;
 
     public Note(int id, String notetopic, String content) {
         this.id = id;

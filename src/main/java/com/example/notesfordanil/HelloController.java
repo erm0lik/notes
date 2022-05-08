@@ -18,37 +18,38 @@ import java.util.List;
 import java.util.Map;
 
 public class HelloController {
-  private NoteDAO noteDAO = new NoteDAO();
-  private List<Note> notes ;
-  @FXML
-  private TextArea textArea ;
-  @FXML
-  private Label nc ;
-  @FXML
-  private VBox noteVBox ;
-  @FXML
-  private Label tema ;
+    private NoteDAO noteDAO = new NoteDAO();
+    private List<Note> notes;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Label nc;
+    @FXML
+    private VBox noteVBox;
+    @FXML
+    private Label tema;
 
-  private int counterup;
+    private int counterup;
     private int counter;
-    private Map<String , Button> buttonMap = new HashMap<>();
+    private Map<String, Button> buttonMap = new HashMap<>();
 
     @FXML
-   public void newNote (){
+    public void newNote() {
         HBox hBox = new HBox();
         TextField textField = new TextField();
         Button button = new Button("Save");
-        hBox.getChildren().addAll(textField , button);
+        hBox.getChildren().addAll(textField, button);
         noteVBox.getChildren().add(hBox);
         button.setOnAction(new EventHandler<ActionEvent>() {
-            String name ;
+            String name;
+
             @Override
             public void handle(ActionEvent actionEvent) {
                 name = textField.getText();
                 noteVBox.getChildren().remove(hBox);
                 noteDAO.newNote(name);
                 Button bt2 = new Button(name);
-                buttonMap.put(bt2.getText(), bt2) ;
+                buttonMap.put(bt2.getText(), bt2);
                 bt2.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
@@ -59,21 +60,24 @@ public class HelloController {
                 noteVBox.getChildren().add(bt2);
             }
         });
-   }
-   public void delete (){
-    textArea.setText("");
-    noteDAO.save(tema.getText() , textArea.getText());
-   }
-   @FXML
-   public void save (){
-    noteDAO.save(tema.getText(), textArea.getText());
-   }
-   public  void update (){
-        if(counterup==0) {
+    }
+
+    public void delete() {
+        textArea.setText("");
+        noteDAO.save(tema.getText(), textArea.getText());
+    }
+
+    @FXML
+    public void save() {
+        noteDAO.save(tema.getText(), textArea.getText());
+    }
+
+    public void update() {
+        if (counterup == 0) {
             notes = noteDAO.getAll();
             for (Note note : notes) {
-                Button button  = new Button(note.getNotetopic());
-                buttonMap.put(button.getText(),button);
+                Button button = new Button(note.getNotetopic());
+                buttonMap.put(button.getText(), button);
                 button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
@@ -86,14 +90,15 @@ public class HelloController {
             }
             counterup++;
         }
-   }
-   public void deletenote (){
+    }
+
+    public void deletenote() {
         noteVBox.getChildren().remove(buttonMap.get(tema.getText()));
         noteDAO.deleteNote(tema.getText());
         tema.setText("");
         textArea.setText("");
 
-   }
+    }
 
 
 }
